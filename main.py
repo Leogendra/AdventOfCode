@@ -1005,7 +1005,7 @@ print("tous flashés : étape",jours)
 
 
 print("\n********** Day 12 **********")
-input = ouvre_txt("day12/test1")
+input = ouvre_txt("day12/test")
 for i in range(len(input)):
   input[i] = input[i].split("-")
 #print_tab(input)
@@ -1092,21 +1092,100 @@ print("chemins différents :",len(chemins))
 print("\n********** Day 13 **********")
 input = ouvre_txt("day13/test")
 for i in range(len(input)):
-  input[i] = input[i].split("-")
-#print_tab(input)
+  input[i] = input[i].split(",")
+
+
+def plier(feuille,instr,mx,my):
+  dir = instr[0]
+  coord = int(instr[1])
+  new_feuille = []
+  new_x = mx
+  new_y = my
+  #pliage vers le haut
+  if dir == 'y':
+    new_y = coord-1
+    for i in range(new_y+1):
+      new_feuille.append(feuille[i])
+      for j in range(mx+1):
+        if feuille[my-i][j] == '#':
+          new_feuille[i][j] = '#'
+  #pliage vers la gauche
+  if dir == 'x':
+    new_x = coord-1
+    for i in range(my+1):
+      new_feuille.append([feuille[i][j] for j in range(mx//2)])
+      for j in range(new_x+1):
+        if feuille[i][mx-j] == '#':
+          new_feuille[i][j] = '#'
+
+  return [new_feuille, new_x, new_y]
+  
+
+
+def aff_grille(g,x,y):
+  for i in range(y+1):
+    for j in range(x+1):
+      if g[i][j] == '#':
+        print('#',end='')
+      else:
+        print('.',end='')
+    print("")
+  print("")
 
 
 
+points = []
+pliages = []
+
+switch = false
+max_x = 0
+max_y = 0
+for ligne in input:
+  if ligne == ['']:
+    switch = true
+  elif switch:
+    pliages.append([ligne[0].split("=")[0][-1],ligne[0].split("=")[-1]])
+  else:
+    x = int(ligne[0])
+    y = int(ligne[1])
+    max_x = max(x, max_x)
+    max_y = max(y, max_y)
+    points.append([x, y])
 
 
+grille = []
+for i in range(max_y+1):
+  grille.append(['.' for j in range(max_x+1)])
 
 
+#placement des points
+for pt in points:
+  grille[pt[1]][pt[0]] = '#'
 
 
+infos_nouvelle_grille = plier(grille,pliages[0],max_x,max_y)
+nouvelle_grille = infos_nouvelle_grille[0]
+new_max_x = infos_nouvelle_grille[1]
+new_max_y = infos_nouvelle_grille[2]
+
+#comptage des points
+cpt = 0
+for i in range(new_max_y+1):
+  for j in range(new_max_x+1):
+    if nouvelle_grille[i][j] == '#':
+      cpt += 1
 
 
+aff_grille(nouvelle_grille,new_max_x,new_max_y)
+print("points après 1 pliage :",cpt)
+print("après tous les pliage :")
 
-
+for i in range(1,len(pliages)):
+  infos_nouvelle_grille = plier(nouvelle_grille,pliages[i],new_max_x,new_max_y)
+  nouvelle_grille = infos_nouvelle_grille[0]
+  new_max_x = infos_nouvelle_grille[1]
+  new_max_y = infos_nouvelle_grille[2]
+  aff_grille(nouvelle_grille,new_max_x,new_max_y)
 
 
 
