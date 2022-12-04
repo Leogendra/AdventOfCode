@@ -1,3 +1,4 @@
 import os
-day = 4
-os.system(f"python3 2022/day{day}/day{day}.py")
+from datetime import datetime
+day = datetime.now().day
+os.system(f"python 2022/day{day}/day{day}.py")
