@@ -1,33 +1,22 @@
-import string
-fichier = "input"
-jeu = [line.strip() for line in open(f"2022/day3/{fichier}.txt","r")]
-#print(jeu)
-
-letters = string.ascii_letters
-cpt = 0
-for line in jeu:
-	compartment1 = line[len(line)//2:]
-	compartment2 = line[:len(line)//2]
-	for c in compartment1:
-		if c in compartment2:
-			cpt += 1 + letters.index(c)
-			break
-
-print("star 1 :",cpt)
-
-cpt = 0
-group = 0
-group_compartment = []
-for line in jeu:
-	group += 1
-	group_compartment.append(line)
-	if group == 3:
-		group = 0
-		for c in group_compartment[0]:
-			if c in group_compartment[1]:
-				if c in group_compartment[2]:
-					cpt += 1 + letters.index(c)
-					group_compartment = []
-					break
-
-print("star 2 :",cpt)
+for fichier in ["test", "input"]:
+	jeu = [line.strip().split(",") for line in open(f"2022/day4/{fichier}.txt","r")]
+	cpt = 0
+	for line in jeu:
+		sector1 = [int(sec) for sec in line[0].split("-")]
+		sector2 = [int(sec) for sec in line[1].split("-")]
+		if (sector1[0] <= sector2[0] and sector1[1] >= sector2[1]) or (sector2[0] <= sector1[0] and sector2[1] >= sector1[1]):
+			cpt += 1
+		
+	print(f"star 1 {fichier} :",cpt)
+	
+	cpt = 0
+	for line in jeu:
+		sector1 = [int(sec) for sec in line[0].split("-")]
+		sector2 = [int(sec) for sec in line[1].split("-")]
+		if (sector1[1] == sector2[0]) or (sector2[1] == sector1[0]):
+			cpt += 1
+		elif sector1[1] > sector2[0]:
+			if sector2[1] > sector1[0]:
+				cpt += 1
+	
+	print(f"star 2 {fichier} :",cpt,"\n")
