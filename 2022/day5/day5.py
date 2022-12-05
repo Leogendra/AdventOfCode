@@ -38,29 +38,28 @@ for fichier in ["test", "input"]:
 	# préparation pour parser l'entrée
 	jeu.reverse()
 	nbPiles = int(jeu[0].strip()[-1])
-	piles = [[] for _ in range(nbPiles)]
+	piles1 = [[] for _ in range(nbPiles)]
+	piles2 = [[] for _ in range(nbPiles)]
 	
 	# Parsing de l'entrée
 	for i in range(1,len(jeu)):
 		for j in range(nbPiles):
 			lettre = jeu[i][1+4*j]
 			if lettre != " ":
-				piles[j].append(lettre)
+				piles1[j].append(lettre)
+				piles2[j].append(lettre)
 
-	piles1 = piles.copy()
 	# lecture des instructions
 	for n, dep, fin in instructions:
 		piles1 = deplacer(piles1, int(n), int(dep)-1, int(fin)-1)
 	
 	list_top1 = [pile[-1] for pile in piles1 if pile != []]
-	
 	print("Part 1 :","".join(list_top1))
 
 
-	piles2 = piles.copy()
 	# lecture des instructions
 	for n, dep, fin in instructions:
-		piles2 = deplacerBloc(piles1, int(n), int(dep)-1, int(fin)-1)
+		piles2 = deplacerBloc(piles2, int(n), int(dep)-1, int(fin)-1)
 
 	list_top2 = [pile[-1] for pile in piles2 if pile != []]
 	
