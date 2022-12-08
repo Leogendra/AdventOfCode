@@ -1,11 +1,9 @@
 for fichier in ["test", "input"]:
-    # PARSING
     print(f"\nFICHIER {fichier}.txt")
     foret = [line.strip() for line in open(f"2022/day8/{fichier}.txt", "r")]
     x_max = len(foret[0])
     y_max = len(foret)
-
-    # PART 1
+    
     cpt1 = 0
     for i in range(x_max):
         for j in range(y_max):
@@ -26,7 +24,6 @@ for fichier in ["test", "input"]:
 
     print("* Part 1 :",cpt1)
 
-    # PART 2
     max_score = 0
     for i in range(x_max):
         for j in range(y_max):
