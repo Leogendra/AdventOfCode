@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-year = datetime.now().year
-day = datetime.now().day
+year = 2017
+day = 1
 print(f"☆ DAY {day} ☆")
 os.system(f"python {year}/day{day}/day{day}.py")

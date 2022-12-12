@@ -1,6 +1,6 @@
 for fichier in ["test", "input"]:
     print(f"\nFICHIER {fichier}.txt")
-    instr = [dir.strip() for dir in [line.strip().split(",") for line in open(f"2016/day1/{fichier}.txt", "r")][0]]
+    instr = [dir.strip() for dir in [line.strip().split(",") for line in open(f"2022/day12/{fichier}.txt", "r")][0]]
 
     dir = 0
     walk = [0, 0, 0, 0]

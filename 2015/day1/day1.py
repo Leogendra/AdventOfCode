@@ -1,6 +1,6 @@
 for fichier in ["test", "input"]:
     print(f"\nFICHIER {fichier}.txt")
-    carte = [line.strip() for line in open(f"2022/day12/{fichier}.txt", "r")]
+    carte = [line.strip() for line in open(f"2015/day1/{fichier}.txt", "r")]
     cpt1 = 0
     for c in carte[0]:
         if c == "(":
