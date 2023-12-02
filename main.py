@@ -1,10 +1,13 @@
-import os, sys
 from datetime import datetime
+import webbrowser
+import os, sys
+
 
 
 def create_file(year, day):
 
     print(f"Création du répertoire {year}/day{day}...")
+
     os.makedirs(f"{year}/day{day}") 
     
     template = ""
@@ -14,10 +17,13 @@ def create_file(year, day):
     with open(f"{year}/day{day}/day{day}.py", "w", encoding="utf-8") as file:
         file.write(template.replace("{real_year}", str(year)).replace("{real_day}", str(day)))
 
-    with open(f"{year}/day{day}/input.txt", "w") as _:
+    with open(f"{year}/day{day}/input.txt", "w") as file:
         pass
-    with open(f"{year}/day{day}/test.txt", "w") as _:
+    with open(f"{year}/day{day}/test.txt", "w") as file:
         pass
+
+    webbrowser.open(f"https://adventofcode.com/{year}/day/{day}")
+    webbrowser.open(f"https://adventofcode.com/{year}/day/{day}/input")
 
 
 
