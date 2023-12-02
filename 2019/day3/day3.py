@@ -1,4 +1,4 @@
-for fichier in ["test", "input"]:
+for fichier in ["test", "input", "input2"]:
     print("\033[92m" + f"\n*** FICHIER {fichier}.txt ***" + "\033[0m")
     paths = [line.strip() for line in open(f"2019/day3/{fichier}.txt", "r")]
 

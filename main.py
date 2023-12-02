@@ -20,3 +20,5 @@ while not os.path.exists(file_path):
     
 print(f"☆ {year} DAY {day} ☆")
 os.system(f"python {file_path}")
+print(f"\n\033[91m☆ {year} DAY {day} ☆\033[0m")
+os.system(f"python {year}/day{day}/day{day}.py")
