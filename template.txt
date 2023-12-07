@@ -1,6 +1,6 @@
 for fichier in ["test", "input"]:
     print(f"\n\033[92m*** FICHIER {fichier}.txt ***\033[0m")
-    data = [line.strip() for line in open(f"{real_year}/day{real_day}/{fichier}.txt", "r")]
+    data = [line.strip() for line in open(f"{real_year}/day{real_day}/{fichier}.txt", "r") if line.strip() != ""]
 
     print("\033[93m--- Part One ---\033[0m")
 
