@@ -105,18 +105,19 @@ def hand_one_win(player1, player2):
 
     
 
-def sort_all_hands(hands):
-    ordered_hands = []
-    for hand in hands:
-        i = 0
-        while i < len(ordered_hands):
-            if hand_one_win(hand, ordered_hands[i]):
-                i += 1
+def sort_all_hands(liste):
+    if len(liste) <= 1:
+        return liste
+    else:
+        pivot = liste[0]
+        left = []
+        right = []
+        for i in range(1, len(liste)):
+            if hand_one_win(pivot, liste[i]):
+                left.append(liste[i])
             else:
-                break
-        ordered_hands = ordered_hands[:i] + [hand] + ordered_hands[i:]
-
-    return ordered_hands
+                right.append(liste[i])
+        return sort_all_hands(left) + [pivot] + sort_all_hands(right)
 
 
 

@@ -38,8 +38,11 @@ if __name__ == "__main__":
     parameters = args[1:]
 
     try:
-        year = parameters[0]
-        day = parameters[1]
+        if len(parameters) == 1:
+            day = parameters[0]
+        else:
+            year = parameters[0]
+            day = parameters[1]
         file_path = f"{year}/day{day}/day{day}.py"
     except:
         pass
