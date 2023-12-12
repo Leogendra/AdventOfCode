@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parameters = args[1:]
 
     try:
-        if len(parameters) == 1:
+        if len(parameters) == 1: # si on a juste mis le jour
             day = parameters[0]
         else:
             year = parameters[0]
