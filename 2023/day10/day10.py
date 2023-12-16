@@ -151,7 +151,7 @@ for fichier in ["test", "input"]:
 
     # print_board(data, direction_1, direction_2)
 
-    print(f"Part One : {direction_1[-1][2]}")
+    print(f"Longueur du pipe : {direction_1[-1][2]}")
     
 
 
@@ -195,6 +195,7 @@ for fichier in ["test", "input"]:
     #     Partie clochard     #
     ###########################
                     
+    # On recalcule tout le pipe pour la grid zoomée
     start = [0,0,-1]
     for i in range(maxY):
         for j in range(maxX):
@@ -206,7 +207,6 @@ for fichier in ["test", "input"]:
 
     start_voisins = get_voisins(start[1], start[0], maxX, maxY)
 
-    # On recalcule le pipe     
     direction_1 = []
     direction_2 = []
     for y, x, dir in start_voisins:
@@ -286,11 +286,5 @@ for fichier in ["test", "input"]:
         for j in range(len(data[i])):
             if ((i*2, j*2) not in flooded):
                 zoneFermee += 1
-        #         print(f"\033[91m{data[i][j]}\033[0m", end="")
-        #     else:
-        #         print(data[i][j], end="")
-        # print()
 
-    print(f"Part One : {zoneFermee}")
-
-    # break
+    print(f"Nombre de zones enfermées : {zoneFermee}")
