@@ -5,7 +5,7 @@ for fichier in ["test", "input"]:
     print("--- Part One ---")
 
     position = [0, 0]
-    history = [[0, 0]]
+    history = [(0, 0)]
 
     for dir in directions:
         if dir == ">":
@@ -17,8 +17,8 @@ for fichier in ["test", "input"]:
         if dir == "v":
             position[1] -= 1
 
-        if not(position in history):
-            history.append(position)
+        if not((position[0],position[1]) in history):
+            history.append((position[0],position[1]))
     
     print(len(history))
 
