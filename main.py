@@ -6,7 +6,7 @@ import os, sys
 
 def create_file(year, day):
 
-    print(f"Création du répertoire {year}/day{day}...")
+    print(f"Creating folder for {year}/day{day}...")
 
     os.makedirs(f"{year}/day{day}") 
     
@@ -37,25 +37,30 @@ if __name__ == "__main__":
     args = sys.argv
     parameters = args[1:]
 
-    try:
-        if len(parameters) == 1: # si on a juste mis le jour
-            day = parameters[0]
-        else:
-            year = parameters[0]
-            day = parameters[1]
-        file_path = f"{year}/day{day}/day{day}.py"
-    except:
-        pass
+    if len(parameters) > 1:
+        try:
+            if len(parameters) == 1: # if we just entered the day
+                day = int(parameters[0])
+            else:
+                year = int(parameters[0])
+                day = int(parameters[1])
+            file_path = f"{year}/day{day}/day{day}.py"
+        except:
+            pass # If the args are wrong (char, etc)
+
+    else:
+        # check if we're in december
+        if (datetime.now().month == 12) and (day < 26):
+            create_file(year, day)
 
     while not os.path.exists(file_path):
-        # check si on est en décembre
-        if (datetime.now().month == 12) and (int(day) < 26):
+        if (year >= 2015) and (year <= datetime.now().year) and (day < 26):
             create_file(year, day)
             break
 
         year, day = input("[year] [day]: ").split()
         file_path = f"{year}/day{day}/day{day}.py"
-        
 
-    print(f"\n\033[91m☆ {year} DAY {day} ☆\033[0m")
+
+    print(f"\n\033[91m☆ {year} - Day {day} ☆\033[0m")
     os.system(f"python {year}/day{day}/day{day}.py")
