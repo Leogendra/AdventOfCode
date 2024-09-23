@@ -83,6 +83,8 @@ for fichier in ["test", "input"]:
     print(f"Part 1: {cpt} sands")
     
 
+
+
     carte = [["." for x in range(1000)] for y in range(ymax+3)]
     for line in instructions:
         for i in range(len(line)-1):
