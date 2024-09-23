@@ -97,7 +97,6 @@ for fichier in ["test", "input"]:
     
     carte[-1] = ["#" for x in range(1000)]
 
-    print("carte généréé")
     cpt2 = 0
     stable = False
     while not(stable):
@@ -113,5 +112,3 @@ for fichier in ["test", "input"]:
 
 
     print(f"Part 2 : {cpt2} sands")
-    if cpt2 != 93:
-        break
