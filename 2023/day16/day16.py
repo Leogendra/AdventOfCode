@@ -83,14 +83,6 @@ for fichier in ["test", "input"]:
             else:
                 break
 
-    # print de la map
-    # for y in range(len(data)):
-    #     for x in range(len(data[y])):
-    #         if f"{x}-{y}" in light_map.keys():
-    #             print("#", end="")
-    #         else:
-    #             print(data[y][x], end="")
-    #     print()
 
     print(f"Nombre de cases illuminées : {len(light_map.keys())}")
 
