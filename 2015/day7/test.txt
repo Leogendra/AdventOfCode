@@ -1,0 +1,8 @@
+lv RSHIFT 2 -> g
+NOT lx -> a
+lx AND lv -> d
+lx OR lv -> e
+lx LSHIFT 2 -> f
+456 -> lv
+NOT lv -> i
+123 -> lx
