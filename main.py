@@ -51,7 +51,8 @@ if __name__ == "__main__":
     else:
         # check if we're in december
         if (datetime.now().month == 12) and (day < 26):
-            create_file(year, day)
+            if not os.path.exists(file_path):
+                create_file(year, day)
 
     while not os.path.exists(file_path):
         if (year >= 2015) and (year <= datetime.now().year) and (day < 26):
