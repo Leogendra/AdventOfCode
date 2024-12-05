@@ -58,18 +58,18 @@ for fichier in ["test", "input"]:
             new_update = [nb for nb in update]
             i = 0
             while i < len(new_update):
-                # word = ", ".join([f"*{new_update[j]}*" if i == j else f"{new_update[j]}" for j in range(len(new_update))])
-                # print(f"  [{word}]")
+
                 currentPage = new_update[i]
                 if currentPage in page_order_after:
                     for beforePage in page_order_after[currentPage]:
                         if (beforePage in new_update) and (beforePage not in new_update[:i]):
                             toSwap = new_update.index(beforePage)
                             new_update[toSwap], new_update[i] = new_update[i], new_update[toSwap]
-                            i = 0
+                            i = -1
                             break
+
                 i += 1
-                        
+
             cpt += new_update[len(new_update)//2]
 
     print(cpt)
