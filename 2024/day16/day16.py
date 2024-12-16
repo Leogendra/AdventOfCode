@@ -71,44 +71,42 @@ for fichier in ["test", "input"]:
 
     # /!\ Keeping the best score
 
-    # visited_best_path = set()
+    visited_best_path = set()
+    visited_list_global = {}
 
-    # queue = [(0, start, ">", {})]
-    # while queue:
-    #     score, coords, direction, visited_list = heapq.heappop(queue)
+    queue = [(0, start, ">", [])]
+    while queue:
+        score, coords, direction, visited_list = heapq.heappop(queue)
 
-    #     if (score > bestScore):
-    #         continue
+        if (coords in visited_list): 
+            # This path has already been here
+            continue
+            
+        if ((coords in visited_list_global) and (visited_list_global[coords] < score)):
+            # A best path exists
+            continue
 
-    #     if (coords in visited_list) and (visited_list[coords] <= score):
-    #             continue
-    #     visited_list[coords] = score
+        visited_list.append(coords)
 
-    #     # print_grid(objects_map, visited_list, maxX, maxY)
-    #     # input()
-
-    #     if (coords == end):
-    #         if (score == bestScore):
-    #             visited_best_path.update(visited_list)
-    #             bestScore = score
-    #             continue
-    #         else:
-    #             break
-
-
-    #     # For all 4 neightbours
-    #     for newX, newY, newDirection in [(0, -1, "^"), (1, 0, ">"), (0, 1, "v"), (-1, 0, "<")]:
-    #         if (newDirection != forbiden_movements[direction]): # If no 180-turn
-    #             new_coords = (coords[0]+newX, coords[1]+newY)
-    #             if (new_coords not in objects_map): # If no wall
-    #                 if (newDirection == direction): # Straight
-    #                     heapq.heappush(queue, (score+1, new_coords, direction, {v:k for v,k in visited_list.items()}))
-    #                 else: # 90-turn
-    #                     heapq.heappush(queue, (score+1001, new_coords, newDirection, {v:k for v,k in visited_list.items()}))
-    #     print(visited_list)
+        if (coords == end):
+            if (score == bestScore):
+                visited_best_path.update(visited_list)
+                bestScore = score
+                continue
+            else:
+                break
 
 
-    # print(f"Number of best seats: {len(visited_best_path)}")
+        # For all 4 neightbours
+        for newX, newY, newDirection in [(0, -1, "^"), (1, 0, ">"), (0, 1, "v"), (-1, 0, "<")]:
+            if (newDirection != forbiden_movements[direction]): # If no 180-turn
+                new_coords = (coords[0]+newX, coords[1]+newY)
+                if (new_coords not in objects_map): # If no wall
+                    if (newDirection == direction): # Straight
+                        heapq.heappush(queue, (score+1, new_coords, direction, [v for v in visited_list]))
+                        visited_list_global[coords] = score+1000
+                    else: # 90-turn
+                        heapq.heappush(queue, (score+1001, new_coords, newDirection, [v for v in visited_list]))
 
-    # if len(visited_best_path) != 64:
-    #     break
+
+    print(f"Number of best seats: {len(visited_best_path)}")
