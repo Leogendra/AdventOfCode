@@ -1,4 +1,4 @@
-from math import trunc
+import heapq
 
 
 
@@ -27,7 +27,7 @@ def execute_program(registers, program, programString=False):
         
         if (opcode == 0):
             # A / combo -> A (truncated)
-            registers["A"] = trunc(registers["A"] / 2**get_combo(registers, operand))
+            registers["A"] = registers["A"] // 2**get_combo(registers, operand)
 
         elif (opcode == 1):
             # B XOR literal -> B
@@ -53,11 +53,11 @@ def execute_program(registers, program, programString=False):
 
         elif (opcode == 6):
             # A / combo -> B (truncated)
-            registers["B"] = trunc(registers["A"] / 2**get_combo(registers, operand))
+            registers["B"] = registers["A"] // 2**get_combo(registers, operand)
 
         elif (opcode == 7):
             # A / combo -> C (truncated)
-            registers["C"] = trunc(registers["A"] / 2**get_combo(registers, operand))
+            registers["C"] = registers["A"] // 2**get_combo(registers, operand)
 
         if (programString and (outputString not in programString)):
             return outputString
@@ -67,6 +67,13 @@ def execute_program(registers, program, programString=False):
     return outputString
 
 
+def chain_input(A, B, C):
+    if ((A % 8) ^ 1) == 0:
+        return -1, -1, -1
+    # C = A // ((A % 8) ^ 1)
+    B = (((A%8) ^ 1) ^ (A // ((A%8) ^ 1))) ^ 4
+    A = A // 8
+    return A, B, C
 
 
 for fichier in ["test", "input"]:
@@ -95,21 +102,64 @@ for fichier in ["test", "input"]:
 
     print("\n\033[93m--- Part Two ---\033[0m")
 
+    # Test: 0(0) 3(3) 28(4) 229(5) 1_835(3) 14_680(0) 117_440
+
+    # Start from the end: right approach
+    if (fichier == "test"):
+        queue = [(0, (0))]
+        while queue:
+            depth, (valueA) = heapq.heappop(queue)
+            if (depth == len(program)):
+                print(f"Found: {valueA}")
+                break
+
+            commandToMatch = program[-(depth+1)]
+            if (valueA % 8 != commandToMatch):
+                continue
+
+            for i in range(8):
+                heapq.heappush(queue, (depth+1, (valueA*8+i)))
+
+    else:
+        queue = [(0, (0))]
+        while queue:
+            depth, (valueA) = heapq.heappop(queue)
+            if (depth == len(program)):
+                print(f"Found: {valueA}")
+                break
+
+            for i in range(8):
+                A = valueA*8 + i
+                if (((A % 8) ^ 1) == 0):
+                    continue
+                valueB = ((((A%8) ^ 1) ^ (A // ((A%8) ^ 1))) ^ 4)
+                if (valueB%8 == commandToMatch):
+                    heapq.heappush(queue, (depth+1, (valueA*8+i)))
+
+            print(queue)
+
+    # break
     """
-    # Bruteforce
-    valueA = 91210000 if fichier == "input" else 0
-    registers = {"A": -1, "B": 0, "C": 0}
-    finalString = ""
-    stringProgram = f"{','.join([str(nb) for nb in program])},"
+    # Start from the start: wrong approach
+    programLenght = len(program)
+    lowBoundA = 1
+    highBoundA = 7
+    for _ in range(programLenght-1):
+        lowBoundA *= 8
+        highBoundA = (8*highBoundA)+7
 
-    while (finalString != stringProgram):
-        valueA += 1
-        registers["A"] = valueA
-        registers["B"] = 0
-        registers["C"] = 0
+    print(f"Bounds: {lowBoundA=:_} -> {highBoundA=:_}")
 
-        if (valueA % 10000 == 0): print(f"Value of register A: {valueA}...       ", end="\r")
-        finalString = execute_program(registers, program, stringProgram)
+    for startingA in range(lowBoundA, highBoundA+1):
+        AllGoodForNow = True
+        A = startingA
+        for i in range(len(program)):
+            if (((A % 8) ^ 1) == 0) or ((((A%8) ^ 1) ^ (A // ((A%8) ^ 1))) ^ 4) % 8 != program[i]:
+                valid = False
+                break
+            A = A // 8
 
-    print(f"Value of register A: {valueA-1}   ")
+        if valid:
+            print(f"Lowest A value: {startingA}")
+            break
     """
